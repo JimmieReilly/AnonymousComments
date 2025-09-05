@@ -1,0 +1,1661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anonymous Comments - Privacy-First Blockchain Platform</title>
+    <meta name="description" content="Share your thoughts anonymously with advanced blockchain encryption technology">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔒</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #14b8a6;
+            --secondary-color: #06b6d4;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --warning-color: #f59e0b;
+            --info-color: #3b82f6;
+            --light-bg: #f0fdfa;
+            --white: #ffffff;
+            --text-dark: #134e4a;
+            --text-muted: #0f766e;
+            --border-color: #99f6e4;
+            --shadow: 0 10px 30px rgba(20,184,166,0.15);
+            --shadow-hover: 0 15px 40px rgba(20,184,166,0.25);
+            --border-radius: 15px;
+            --border-radius-small: 8px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--white);
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 700;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .wallet-section {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .wallet-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .section:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .section h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 1.6rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius-small);
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: inherit;
+            background: var(--white);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--white);
+            border: none;
+            padding: 14px 28px;
+            border-radius: var(--border-radius-small);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--text-muted) 0%, #555 100%);
+        }
+
+        .topics-list {
+            max-height: 500px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+
+        .topics-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .topics-list::-webkit-scrollbar-track {
+            background: var(--light-bg);
+            border-radius: 3px;
+        }
+
+        .topics-list::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 3px;
+        }
+
+        .topic-item {
+            background: var(--light-bg);
+            border-radius: var(--border-radius-small);
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .topic-item:hover {
+            background: #e9ecef;
+            border-color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .topic-item.selected {
+            background: #e7f3ff;
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .topic-title {
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .topic-description {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+
+        .topic-meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+        }
+
+        .comments-section {
+            grid-column: 1 / -1;
+            margin-top: 30px;
+        }
+
+        .comment-item {
+            background: var(--light-bg);
+            border-radius: var(--border-radius-small);
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .comment-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .comment-time {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .comment-rating {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .rating-stars {
+            color: var(--warning-color);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .comment-content {
+            background: var(--white);
+            padding: 15px;
+            border-radius: var(--border-radius-small);
+            border: 1px solid var(--border-color);
+            font-style: italic;
+            color: var(--text-muted);
+            margin: 15px 0;
+        }
+
+        .comment-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: none;
+            border: 2px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .action-btn.like-btn:hover {
+            background: var(--success-color);
+            color: var(--white);
+            border-color: var(--success-color);
+        }
+
+        .action-btn.dislike-btn:hover {
+            background: var(--error-color);
+            color: var(--white);
+            border-color: var(--error-color);
+        }
+
+        .status {
+            padding: 15px 20px;
+            border-radius: var(--border-radius-small);
+            margin: 15px 0;
+            font-weight: 500;
+            border-left: 4px solid;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border-color: var(--success-color);
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border-color: var(--error-color);
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-color: var(--info-color);
+        }
+
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+            border-color: var(--warning-color);
+        }
+
+        .privacy-notice {
+            background: linear-gradient(135deg, #ccfbf1 0%, #a7f3d0 100%);
+            border: 2px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .privacy-notice::before {
+            content: '🛡️';
+            font-size: 3rem;
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            opacity: 0.1;
+        }
+
+        .privacy-notice h3 {
+            color: #134e4a;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .privacy-notice p {
+            color: #0f766e;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .loading::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-color);
+            border-top: 2px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .empty-state p {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 2.2rem;
+            }
+
+            .header .subtitle {
+                font-size: 1rem;
+            }
+
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 15px;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .comment-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .comment-actions {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .section {
+                padding: 15px;
+            }
+
+            .btn {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🔒 Anonymous Comments</h1>
+            <p class="subtitle">Privacy-First Blockchain Platform - Share your thoughts with complete anonymity</p>
+        </header>
+
+        <div class="privacy-notice">
+            <h3>🛡️ Advanced Privacy Protection</h3>
+            <p>This platform uses cutting-edge Fully Homomorphic Encryption (FHE) technology to ensure your comments remain completely anonymous and private. Your identity is never stored, tracked, or revealed on the blockchain.</p>
+        </div>
+
+        <section class="wallet-section">
+            <h3>Wallet Connection</h3>
+            <div id="walletStatus" class="status info">Please connect your MetaMask wallet to participate</div>
+            <button id="connectWallet" class="btn">Connect MetaMask Wallet</button>
+        </section>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-number" id="totalTopics">0</span>
+                <div class="stat-label">Discussion Topics</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="totalComments">0</span>
+                <div class="stat-label">Anonymous Comments</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="activeTopics">0</span>
+                <div class="stat-label">Active Discussions</div>
+            </div>
+        </div>
+
+        <main class="main-content">
+            <section class="section">
+                <h2>📝 Create Discussion Topic</h2>
+                <form id="topicForm">
+                    <div class="form-group">
+                        <label for="topicTitle">Topic Title</label>
+                        <input type="text" id="topicTitle" placeholder="Enter an engaging topic title..." maxlength="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="topicDescription">Description</label>
+                        <textarea id="topicDescription" rows="4" placeholder="Describe what you'd like to discuss..." maxlength="500"></textarea>
+                    </div>
+                    <button type="submit" id="createTopicBtn" class="btn" disabled>Create New Topic</button>
+                </form>
+            </section>
+
+            <section class="section">
+                <h2>💬 Submit Anonymous Comment</h2>
+                <form id="commentForm">
+                    <div class="form-group">
+                        <label for="selectedTopic">Select Discussion Topic</label>
+                        <select id="selectedTopic" required>
+                            <option value="">Choose a topic to comment on...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="commentText">Your Anonymous Comment</label>
+                        <textarea id="commentText" rows="4" placeholder="Share your thoughts anonymously..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="commentRating">Rate this Topic (1-5 stars)</label>
+                        <select id="commentRating">
+                            <option value="5">⭐⭐⭐⭐⭐ Excellent (5 stars)</option>
+                            <option value="4">⭐⭐⭐⭐ Good (4 stars)</option>
+                            <option value="3">⭐⭐⭐ Average (3 stars)</option>
+                            <option value="2">⭐⭐ Poor (2 stars)</option>
+                            <option value="1">⭐ Very Poor (1 star)</option>
+                        </select>
+                    </div>
+                    <button type="submit" id="submitCommentBtn" class="btn" disabled>Submit Anonymous Comment</button>
+                </form>
+            </section>
+        </main>
+
+        <section class="section topics-list">
+            <h2>📋 Active Discussion Topics</h2>
+            <div id="topicsContainer" class="loading">Loading discussion topics...</div>
+        </section>
+
+        <section class="section comments-section">
+            <h2>💭 Anonymous Comments</h2>
+            <div id="commentsContainer">
+                <div class="empty-state">
+                    <div class="empty-state-icon">💬</div>
+                    <h3>No Comments Yet</h3>
+                    <p>Select a topic above to view and participate in anonymous discussions</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <script>
+        // Contract configuration
+        const CONTRACT_ADDRESS = "0x0698d515F0aADf782558cc5431444E0209443A50";
+        const CONTRACT_ABI = [
+            {
+                "inputs": [],
+                "stateMutability": "nonpayable",
+                "type": "constructor"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "internalType": "uint256",
+                        "name": "commentId",
+                        "type": "uint256"
+                    },
+                    {
+                        "indexed": true,
+                        "internalType": "uint256",
+                        "name": "topicId",
+                        "type": "uint256"
+                    },
+                    {
+                        "indexed": false,
+                        "internalType": "uint256",
+                        "name": "timestamp",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "CommentAdded",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "internalType": "uint256",
+                        "name": "commentId",
+                        "type": "uint256"
+                    },
+                    {
+                        "indexed": false,
+                        "internalType": "bool",
+                        "name": "isLike",
+                        "type": "bool"
+                    }
+                ],
+                "name": "CommentRated",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "internalType": "address",
+                        "name": "user",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "internalType": "uint256",
+                        "name": "timestamp",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "PrivacyUpdated",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "internalType": "uint256",
+                        "name": "topicId",
+                        "type": "uint256"
+                    },
+                    {
+                        "indexed": false,
+                        "internalType": "string",
+                        "name": "title",
+                        "type": "string"
+                    },
+                    {
+                        "indexed": true,
+                        "internalType": "address",
+                        "name": "creator",
+                        "type": "address"
+                    }
+                ],
+                "name": "TopicCreated",
+                "type": "event"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "string",
+                        "name": "_title",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "_description",
+                        "type": "string"
+                    }
+                ],
+                "name": "createTopic",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "emergencyPause",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "_commentId",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "getCommentInfo",
+                "outputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "timestamp",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "topicId",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "likes",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "dislikes",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "bool",
+                        "name": "isVisible",
+                        "type": "bool"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "getMyAnonymousId",
+                "outputs": [
+                    {
+                        "internalType": "bytes32",
+                        "name": "",
+                        "type": "bytes32"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "getMyPrivacyStatus",
+                "outputs": [
+                    {
+                        "internalType": "bool",
+                        "name": "hasCommented",
+                        "type": "bool"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "lastActivity",
+                        "type": "uint256"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "getPlatformStats",
+                "outputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "totalTopicsCount",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "totalCommentsCount",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "activeTopics",
+                        "type": "uint256"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "_topicId",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "getTopicComments",
+                "outputs": [
+                    {
+                        "internalType": "uint256[]",
+                        "name": "",
+                        "type": "uint256[]"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "_topicId",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "getTopicInfo",
+                "outputs": [
+                    {
+                        "internalType": "string",
+                        "name": "title",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "description",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "creator",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "createdAt",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "commentCount",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "bool",
+                        "name": "isActive",
+                        "type": "bool"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "_commentId",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "bool",
+                        "name": "_isLike",
+                        "type": "bool"
+                    }
+                ],
+                "name": "rateComment",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "_commentId",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "requestCommentDecryption",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "_topicId",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint32",
+                        "name": "_contentHash",
+                        "type": "uint32"
+                    },
+                    {
+                        "internalType": "uint8",
+                        "name": "_rating",
+                        "type": "uint8"
+                    }
+                ],
+                "name": "submitComment",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "_commentId",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "toggleCommentVisibility",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "_topicId",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "toggleTopicStatus",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }
+        ];
+
+        // Application state
+        let web3Provider;
+        let contract;
+        let userAddress;
+        let selectedTopicId = null;
+
+        // DOM elements
+        const elements = {
+            connectWallet: document.getElementById('connectWallet'),
+            walletStatus: document.getElementById('walletStatus'),
+            totalTopics: document.getElementById('totalTopics'),
+            totalComments: document.getElementById('totalComments'),
+            activeTopics: document.getElementById('activeTopics'),
+            topicForm: document.getElementById('topicForm'),
+            topicTitle: document.getElementById('topicTitle'),
+            topicDescription: document.getElementById('topicDescription'),
+            createTopicBtn: document.getElementById('createTopicBtn'),
+            commentForm: document.getElementById('commentForm'),
+            selectedTopic: document.getElementById('selectedTopic'),
+            commentText: document.getElementById('commentText'),
+            commentRating: document.getElementById('commentRating'),
+            submitCommentBtn: document.getElementById('submitCommentBtn'),
+            topicsContainer: document.getElementById('topicsContainer'),
+            commentsContainer: document.getElementById('commentsContainer')
+        };
+
+        // Initialize application
+        async function init() {
+            setupEventListeners();
+            updateUI();
+            await loadPlatformStats();
+            await loadTopics();
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            elements.connectWallet.addEventListener('click', connectWallet);
+            elements.topicForm.addEventListener('submit', handleTopicSubmit);
+            elements.commentForm.addEventListener('submit', handleCommentSubmit);
+            elements.selectedTopic.addEventListener('change', handleTopicSelection);
+        }
+
+        // Connect to MetaMask wallet
+        async function connectWallet() {
+            try {
+                if (typeof window.ethereum === 'undefined') {
+                    updateWalletStatus('MetaMask is not installed. Please install MetaMask to continue.', 'error');
+                    return;
+                }
+
+                await window.ethereum.request({ method: 'eth_requestAccounts' });
+                web3Provider = new ethers.providers.Web3Provider(window.ethereum);
+
+                const signer = web3Provider.getSigner();
+                userAddress = await signer.getAddress();
+
+                // Initialize contract
+                contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+
+                updateWalletStatus(`Successfully connected: ${formatAddress(userAddress)}`, 'success');
+                updateUI();
+
+                // Listen for account changes
+                window.ethereum.on('accountsChanged', handleAccountsChanged);
+                window.ethereum.on('chainChanged', handleChainChanged);
+
+            } catch (error) {
+                console.error('Error connecting wallet:', error);
+                if (error.code === 4001) {
+                    updateWalletStatus('Connection rejected by user', 'error');
+                } else {
+                    updateWalletStatus('Failed to connect wallet', 'error');
+                }
+            }
+        }
+
+        // Handle account changes
+        function handleAccountsChanged(accounts) {
+            if (accounts.length === 0) {
+                userAddress = null;
+                contract = null;
+                updateWalletStatus('Wallet disconnected', 'info');
+            } else {
+                userAddress = accounts[0];
+                updateWalletStatus(`Connected: ${formatAddress(userAddress)}`, 'success');
+            }
+            updateUI();
+        }
+
+        // Handle chain changes
+        function handleChainChanged(chainId) {
+            window.location.reload();
+        }
+
+        // Format address for display
+        function formatAddress(address) {
+            return `${address.substring(0, 6)}...${address.substring(38)}`;
+        }
+
+        // Update wallet status display
+        function updateWalletStatus(message, type = 'info') {
+            elements.walletStatus.textContent = message;
+            elements.walletStatus.className = `status ${type}`;
+        }
+
+        // Update UI based on wallet connection status
+        function updateUI() {
+            const isConnected = userAddress !== undefined && userAddress !== null;
+
+            elements.connectWallet.style.display = isConnected ? 'none' : 'block';
+            elements.createTopicBtn.disabled = !isConnected;
+            elements.submitCommentBtn.disabled = !isConnected || !selectedTopicId;
+
+            if (isConnected) {
+                elements.topicForm.style.opacity = '1';
+                elements.commentForm.style.opacity = '1';
+            } else {
+                elements.topicForm.style.opacity = '0.6';
+                elements.commentForm.style.opacity = '0.6';
+            }
+        }
+
+        // Load platform statistics
+        async function loadPlatformStats() {
+            try {
+                if (!contract) return;
+
+                const stats = await contract.getPlatformStats();
+
+                elements.totalTopics.textContent = stats.totalTopicsCount.toString();
+                elements.totalComments.textContent = stats.totalCommentsCount.toString();
+                elements.activeTopics.textContent = stats.activeTopics.toString();
+
+            } catch (error) {
+                console.error('Error loading platform stats:', error);
+                elements.totalTopics.textContent = '0';
+                elements.totalComments.textContent = '0';
+                elements.activeTopics.textContent = '0';
+            }
+        }
+
+        // Load all topics
+        async function loadTopics() {
+            try {
+                if (!contract) {
+                    // Show sample topics when wallet not connected
+                    loadSampleTopics();
+                    return;
+                }
+
+                elements.topicsContainer.innerHTML = '<div class="loading">Loading discussion topics...</div>';
+                elements.selectedTopic.innerHTML = '<option value="">Choose a topic to comment on...</option>';
+
+                const stats = await contract.getPlatformStats();
+                const totalTopics = stats.totalTopicsCount.toNumber();
+
+                if (totalTopics === 0) {
+                    // Show sample topics if no blockchain topics exist
+                    loadSampleTopics();
+                    return;
+                }
+
+                elements.topicsContainer.innerHTML = '';
+
+                for (let i = 1; i <= totalTopics; i++) {
+                    try {
+                        const topicInfo = await contract.getTopicInfo(i);
+
+                        if (topicInfo.isActive) {
+                            const topicElement = createTopicElement(i, topicInfo);
+                            elements.topicsContainer.appendChild(topicElement);
+
+                            const option = document.createElement('option');
+                            option.value = i;
+                            option.textContent = topicInfo.title;
+                            elements.selectedTopic.appendChild(option);
+                        }
+                    } catch (error) {
+                        console.error(`Error loading topic ${i}:`, error);
+                    }
+                }
+
+                if (elements.topicsContainer.children.length === 0) {
+                    loadSampleTopics();
+                }
+
+            } catch (error) {
+                console.error('Error loading topics:', error);
+                loadSampleTopics();
+            }
+        }
+
+        // Load sample topics for demonstration
+        function loadSampleTopics() {
+            const sampleTopics = [
+                {
+                    id: 1,
+                    title: "Privacy in Blockchain Technology",
+                    description: "Discuss the importance of privacy features in modern blockchain applications",
+                    commentCount: 15,
+                    createdAt: Date.now() - 86400000 * 2
+                },
+                {
+                    id: 2,
+                    title: "Decentralized Social Media",
+                    description: "Share your thoughts on the future of social media platforms",
+                    commentCount: 23,
+                    createdAt: Date.now() - 86400000 * 5
+                },
+                {
+                    id: 3,
+                    title: "Smart Contract Security",
+                    description: "Best practices for writing secure smart contracts",
+                    commentCount: 8,
+                    createdAt: Date.now() - 86400000 * 1
+                },
+                {
+                    id: 4,
+                    title: "Web3 User Experience",
+                    description: "How can we make Web3 applications more user-friendly?",
+                    commentCount: 12,
+                    createdAt: Date.now() - 86400000 * 3
+                },
+                {
+                    id: 5,
+                    title: "Anonymous Voting Systems",
+                    description: "Exploring privacy-preserving voting mechanisms on blockchain",
+                    commentCount: 19,
+                    createdAt: Date.now() - 86400000 * 7
+                }
+            ];
+
+            elements.topicsContainer.innerHTML = '';
+            elements.selectedTopic.innerHTML = '<option value="">Choose a topic to comment on...</option>';
+
+            sampleTopics.forEach(topic => {
+                const topicElement = createSampleTopicElement(topic);
+                elements.topicsContainer.appendChild(topicElement);
+
+                const option = document.createElement('option');
+                option.value = topic.id;
+                option.textContent = topic.title;
+                elements.selectedTopic.appendChild(option);
+            });
+        }
+
+        // Create sample topic element
+        function createSampleTopicElement(topic) {
+            const div = document.createElement('div');
+            div.className = 'topic-item';
+            div.onclick = () => selectSampleTopic(topic.id);
+
+            div.innerHTML = `
+                <div class="topic-title">${escapeHtml(topic.title)}</div>
+                <div class="topic-description">${escapeHtml(topic.description)}</div>
+                <div class="topic-meta">
+                    <span>💬 ${topic.commentCount} comments</span>
+                    <span>📅 ${formatDate(topic.createdAt)}</span>
+                </div>
+            `;
+
+            return div;
+        }
+
+        // Select a sample topic
+        function selectSampleTopic(topicId) {
+            selectedTopicId = topicId;
+
+            document.querySelectorAll('.topic-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+
+            event.currentTarget.classList.add('selected');
+            elements.selectedTopic.value = topicId;
+
+            if (!userAddress) {
+                elements.submitCommentBtn.disabled = true;
+                updateWalletStatus('Please connect your wallet to comment', 'info');
+            } else {
+                elements.submitCommentBtn.disabled = false;
+            }
+
+            loadSampleComments(topicId);
+        }
+
+        // Load sample comments
+        function loadSampleComments(topicId) {
+            const sampleComments = [
+                {
+                    id: 1,
+                    timestamp: Date.now() - 3600000 * 5,
+                    likes: 12,
+                    dislikes: 2
+                },
+                {
+                    id: 2,
+                    timestamp: Date.now() - 3600000 * 3,
+                    likes: 8,
+                    dislikes: 1
+                },
+                {
+                    id: 3,
+                    timestamp: Date.now() - 3600000 * 1,
+                    likes: 15,
+                    dislikes: 3
+                }
+            ];
+
+            elements.commentsContainer.innerHTML = '';
+
+            sampleComments.forEach(comment => {
+                const commentElement = createSampleCommentElement(comment);
+                elements.commentsContainer.appendChild(commentElement);
+            });
+        }
+
+        // Create sample comment element
+        function createSampleCommentElement(comment) {
+            const div = document.createElement('div');
+            div.className = 'comment-item';
+
+            div.innerHTML = `
+                <div class="comment-header">
+                    <div class="comment-time">
+                        🕒 ${formatDate(comment.timestamp)}
+                    </div>
+                    <div class="comment-rating">
+                        <span class="rating-stars">⭐ Encrypted Rating</span>
+                    </div>
+                </div>
+                <div class="comment-content">
+                    🔒 <strong>Anonymous Content</strong> - This comment is encrypted and protected by blockchain privacy technology. Connect wallet to interact.
+                </div>
+                <div class="comment-actions">
+                    <button class="action-btn like-btn" onclick="showWalletRequired()">
+                        👍 ${comment.likes}
+                    </button>
+                    <button class="action-btn dislike-btn" onclick="showWalletRequired()">
+                        👎 ${comment.dislikes}
+                    </button>
+                </div>
+            `;
+
+            return div;
+        }
+
+        // Show wallet required message
+        function showWalletRequired() {
+            if (!userAddress) {
+                updateWalletStatus('Please connect your wallet to interact with comments', 'warning');
+            }
+        }
+
+        // Create topic element
+        function createTopicElement(id, topicInfo) {
+            const div = document.createElement('div');
+            div.className = 'topic-item';
+            div.onclick = () => selectTopic(id);
+
+            div.innerHTML = `
+                <div class="topic-title">${escapeHtml(topicInfo.title)}</div>
+                <div class="topic-description">${escapeHtml(topicInfo.description)}</div>
+                <div class="topic-meta">
+                    <span>💬 ${topicInfo.commentCount} comments</span>
+                    <span>📅 ${formatDate(topicInfo.createdAt * 1000)}</span>
+                </div>
+            `;
+
+            return div;
+        }
+
+        // Select a topic
+        function selectTopic(topicId) {
+            selectedTopicId = topicId;
+
+            document.querySelectorAll('.topic-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+
+            event.currentTarget.classList.add('selected');
+            elements.selectedTopic.value = topicId;
+            elements.submitCommentBtn.disabled = !userAddress;
+
+            loadComments(topicId);
+        }
+
+        // Handle topic selection from dropdown
+        function handleTopicSelection(event) {
+            const topicId = parseInt(event.target.value);
+            if (topicId) {
+                selectedTopicId = topicId;
+                elements.submitCommentBtn.disabled = !userAddress;
+                loadComments(topicId);
+
+                // Update visual selection
+                document.querySelectorAll('.topic-item').forEach((item, index) => {
+                    item.classList.remove('selected');
+                    if (index + 1 === topicId) {
+                        item.classList.add('selected');
+                    }
+                });
+            } else {
+                selectedTopicId = null;
+                elements.submitCommentBtn.disabled = true;
+                elements.commentsContainer.innerHTML = '<div class="empty-state"><div class="empty-state-icon">💬</div><h3>No Comments Yet</h3><p>Select a topic above to view and participate in anonymous discussions</p></div>';
+            }
+        }
+
+        // Load comments for a topic
+        async function loadComments(topicId) {
+            try {
+                if (!contract) return;
+
+                elements.commentsContainer.innerHTML = '<div class="loading">Loading comments...</div>';
+
+                const commentIds = await contract.getTopicComments(topicId);
+
+                if (commentIds.length === 0) {
+                    elements.commentsContainer.innerHTML = '<div class="empty-state"><div class="empty-state-icon">💬</div><h3>No Comments Yet</h3><p>Be the first to share your anonymous thoughts on this topic!</p></div>';
+                    return;
+                }
+
+                elements.commentsContainer.innerHTML = '';
+
+                for (let commentId of commentIds) {
+                    try {
+                        const commentInfo = await contract.getCommentInfo(commentId);
+
+                        if (commentInfo.isVisible) {
+                            const commentElement = createCommentElement(commentId, commentInfo);
+                            elements.commentsContainer.appendChild(commentElement);
+                        }
+                    } catch (error) {
+                        console.error(`Error loading comment ${commentId}:`, error);
+                    }
+                }
+
+                if (elements.commentsContainer.children.length === 0) {
+                    elements.commentsContainer.innerHTML = '<div class="empty-state"><div class="empty-state-icon">👁️</div><h3>No Visible Comments</h3><p>All comments for this topic are currently hidden</p></div>';
+                }
+
+            } catch (error) {
+                console.error('Error loading comments:', error);
+                elements.commentsContainer.innerHTML = '<div class="empty-state"><div class="empty-state-icon">❌</div><h3>Error Loading Comments</h3><p>Please try selecting the topic again</p></div>';
+            }
+        }
+
+        // Create comment element
+        function createCommentElement(commentId, commentInfo) {
+            const div = document.createElement('div');
+            div.className = 'comment-item';
+
+            div.innerHTML = `
+                <div class="comment-header">
+                    <div class="comment-time">
+                        🕒 ${formatDate(commentInfo.timestamp * 1000)}
+                    </div>
+                    <div class="comment-rating">
+                        <span class="rating-stars">⭐ Encrypted Rating</span>
+                    </div>
+                </div>
+                <div class="comment-content">
+                    🔒 <strong>Anonymous Content</strong> - This comment is encrypted and protected by blockchain privacy technology
+                </div>
+                <div class="comment-actions">
+                    <button class="action-btn like-btn" onclick="rateComment(${commentId}, true)">
+                        👍 ${commentInfo.likes}
+                    </button>
+                    <button class="action-btn dislike-btn" onclick="rateComment(${commentId}, false)">
+                        👎 ${commentInfo.dislikes}
+                    </button>
+                </div>
+            `;
+
+            return div;
+        }
+
+        // Handle topic form submission
+        async function handleTopicSubmit(event) {
+            event.preventDefault();
+
+            const title = elements.topicTitle.value.trim();
+            const description = elements.topicDescription.value.trim();
+
+            if (!title) {
+                updateWalletStatus('Please enter a topic title', 'error');
+                return;
+            }
+
+            if (!contract) {
+                updateWalletStatus('Please connect your wallet first', 'error');
+                return;
+            }
+
+            try {
+                updateWalletStatus('Creating topic...', 'info');
+
+                const tx = await contract.createTopic(title, description);
+                updateWalletStatus('Transaction submitted. Waiting for confirmation...', 'info');
+
+                await tx.wait();
+                updateWalletStatus('Topic created successfully!', 'success');
+
+                // Clear form
+                elements.topicTitle.value = '';
+                elements.topicDescription.value = '';
+
+                // Reload data
+                await loadPlatformStats();
+                await loadTopics();
+
+            } catch (error) {
+                console.error('Error creating topic:', error);
+                if (error.code === 4001) {
+                    updateWalletStatus('Transaction rejected by user', 'error');
+                } else {
+                    updateWalletStatus('Failed to create topic', 'error');
+                }
+            }
+        }
+
+        // Handle comment form submission
+        async function handleCommentSubmit(event) {
+            event.preventDefault();
+
+            const topicId = selectedTopicId;
+            const commentText = elements.commentText.value.trim();
+            const rating = parseInt(elements.commentRating.value);
+
+            if (!topicId) {
+                updateWalletStatus('Please select a topic', 'error');
+                return;
+            }
+
+            if (!commentText) {
+                updateWalletStatus('Please enter a comment', 'error');
+                return;
+            }
+
+            if (!contract) {
+                updateWalletStatus('Please connect your wallet first', 'error');
+                return;
+            }
+
+            try {
+                updateWalletStatus('Submitting anonymous comment...', 'info');
+
+                // Create a hash of the comment for privacy
+                const contentHash = hashString(commentText);
+
+                const tx = await contract.submitComment(topicId, contentHash, rating);
+                updateWalletStatus('Transaction submitted. Waiting for confirmation...', 'info');
+
+                await tx.wait();
+                updateWalletStatus('Anonymous comment submitted successfully!', 'success');
+
+                // Clear form
+                elements.commentText.value = '';
+                elements.commentRating.value = '5';
+
+                // Reload data
+                await loadPlatformStats();
+                await loadComments(topicId);
+
+            } catch (error) {
+                console.error('Error submitting comment:', error);
+                if (error.code === 4001) {
+                    updateWalletStatus('Transaction rejected by user', 'error');
+                } else {
+                    updateWalletStatus('Failed to submit comment', 'error');
+                }
+            }
+        }
+
+        // Rate a comment
+        async function rateComment(commentId, isLike) {
+            try {
+                if (!contract) {
+                    updateWalletStatus('Please connect your wallet first', 'error');
+                    return;
+                }
+
+                updateWalletStatus('Submitting rating...', 'info');
+
+                const tx = await contract.rateComment(commentId, isLike);
+                updateWalletStatus('Transaction submitted. Waiting for confirmation...', 'info');
+
+                await tx.wait();
+                updateWalletStatus('Rating submitted successfully!', 'success');
+
+                // Reload comments
+                if (selectedTopicId) {
+                    await loadComments(selectedTopicId);
+                }
+
+            } catch (error) {
+                console.error('Error rating comment:', error);
+                if (error.code === 4001) {
+                    updateWalletStatus('Transaction rejected by user', 'error');
+                } else if (error.message.includes('Already voted')) {
+                    updateWalletStatus('You have already voted on this topic', 'warning');
+                } else {
+                    updateWalletStatus('Failed to submit rating', 'error');
+                }
+            }
+        }
+
+        // Utility functions
+        function hashString(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; // Convert to 32bit integer
+            }
+            return Math.abs(hash);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function formatDate(timestamp) {
+            return new Date(timestamp).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Initialize the application when the page loads
+        window.addEventListener('load', init);
+
+        // Make functions globally available
+        window.rateComment = rateComment;
+        window.showWalletRequired = showWalletRequired;
+    </script>
+</body>
+</html>
